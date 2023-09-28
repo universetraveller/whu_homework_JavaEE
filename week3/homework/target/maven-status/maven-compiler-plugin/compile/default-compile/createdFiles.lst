@@ -1,0 +1,13 @@
+cn/edu/whu/BeansReader.class
+cn/edu/whu/ObjectFactory.class
+cn/edu/whu/Bean.class
+cn/edu/whu/Property.class
+cn/edu/whu/ObjectFactory1.class
+cn/edu/whu/IObject1.class
+cn/edu/whu/MiniApplicationContext.class
+cn/edu/whu/XMLParser.class
+cn/edu/whu/DelegateObject.class
+cn/edu/whu/InterfaceObject.class
+cn/edu/whu/Constants.class
+cn/edu/whu/ContextBean.class
+cn/edu/whu/IObject.class

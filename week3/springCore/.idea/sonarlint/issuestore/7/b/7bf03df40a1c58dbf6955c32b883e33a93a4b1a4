@@ -1,0 +1,11 @@
+
+V	java:S125"<This block of commented-out lines of code should be removed.(¢´ »úÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ÆÇ¥òûÿÿÿÿ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(Ÿ”­Ğ
+V	java:S125"<This block of commented-out lines of code should be removed.(’ºúÒûÿÿÿÿ
+K
+java:S1128"5Remove this unused import 'com.itheima.dao.OrderDao'.(ŠëÆ®
+V
+java:S1128"@Remove this unused import 'com.itheima.factory.OrderDaoFactory'.(…¦ì¯
+Z
+java:S1128"?Remove this unused import 'com.itheima.factory.UserDaoFactory'.(·üÜüÿÿÿÿ
