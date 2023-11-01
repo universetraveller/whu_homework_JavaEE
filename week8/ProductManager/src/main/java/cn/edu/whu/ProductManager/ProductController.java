@@ -1,0 +1,72 @@
+package cn.edu.whu.ProductManager;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import java.util.List;
+import org.springframework.beans.factory.annotation.*;
+import cn.edu.whu.ProductManager.exception.ProductException;
+@RestController()
+@RequestMapping("products")
+public class ProductController{
+	@Autowired
+	ProductManager productManager;
+
+	@GetMapping("/test")
+	public ResponseEntity<String> testLoad(){
+		return ResponseEntity.ok("Load successfully.\n");
+	}
+
+	@GetMapping("/help")
+	@PreAuthorize("hasAuthority('BASIC_ACCOUNT')")
+	public ResponseEntity<String> productsMsg(){
+		return ResponseEntity.ok("GET /products/help -> this message\nGET /products/{id} -> get product\nGET /products?{key=value} -> find product\n" +
+				"PUT /products/{id} REQUEST -> update product\nPOST /products REQUEST -> add product\n" + 
+				"DELETE /products/{id} remove product\n");
+	}
+
+	@GetMapping("/{id}")
+	@PreAuthorize("hasAuthority('AUTHORITY_USER')")
+	public ResponseEntity<Product> getProduct(@PathVariable long id){
+		Product prod = productManager.getProduct(id);
+		if(prod == null){
+			return ResponseEntity.status(400).build();
+		}
+		return ResponseEntity.ok(prod);
+	}
+
+	@GetMapping("")
+	@PreAuthorize("hasAuthority('AUTHORITY_USER')")
+	public ResponseEntity<List<Product>> findProducts(String name, Long id, String brand, String date, Double price){
+		return ResponseEntity.ok(productManager.findProducts(name, id, brand, date, price));
+	}
+
+	@PostMapping("")
+	@PreAuthorize("hasAuthority('AUTHORITY_SUPPLIER')")
+	public ResponseEntity<Product> addProduct(@RequestBody Product prod) throws ProductException{
+		try{
+			prod = productManager.addProduct(prod);
+		}catch(Exception e){
+			throw new ProductException(prod.getId(), -1, e.getMessage());
+		}
+		return ResponseEntity.ok(prod);
+	}
+
+	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('AUTHORITY_SUPPLIER')")
+	public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody Product prod) throws ProductException{
+		try{
+			productManager.updateProduct(id, prod);
+		}catch(Exception e){
+			throw new ProductException(id, -1, e.getMessage());
+		}
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('AUTHORITY_SUPPLIER')")
+	public ResponseEntity<Void> deleteProduct(@PathVariable long id){
+		productManager.deleteProduct(id);
+		return ResponseEntity.ok().build();
+	}
+
+}
